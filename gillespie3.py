@@ -41,16 +41,27 @@ def run_steps(A_0: int, reactions: Iterable[Reaction], n_steps: int):
     return times, A
 
 
-def run_time(A_0: int, reactions: Iterable[Reaction], final_time: float):
-    times = [0]
-    A = [A_0]
+def run_time(A_0: int, reactions: Iterable[Reaction], final_time: float, return_all:bool=True):
+    if return_all:
+        times = [0]
+        A = [A_0]
+        current_time, A_t_plus_tau = step(A_0, reactions)
+        while current_time <= final_time:
+            times.append(current_time)
+            A.append(A_t_plus_tau)
+            tau, A_t_plus_tau = step(A[-1], reactions)
+            current_time += tau
+        return times, A
+    
+    time = 0
+    A_t = A_0
     current_time, A_t_plus_tau = step(A_0, reactions)
     while current_time <= final_time:
-        times.append(current_time)
-        A.append(A_t_plus_tau)
-        tau, A_t_plus_tau = step(A[-1], reactions)
+        time = current_time
+        A_t = A_t_plus_tau
+        tau, A_t_plus_tau = step(A_t, reactions)
         current_time += tau
-    return times, A
+    return A_t
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
-import sys
+import time
+from concurrent.futures import ProcessPoolExecutor
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,7 +9,9 @@ from reaction import *
 
 
 if __name__ == "__main__":
-    n_samples = 100
+    _, ax = plt.subplots()
+
+    n_samples = 10
     hs = np.linspace(0, 5, n_samples)
     equilibria = np.zeros(n_samples)
     sys_size = 500
@@ -24,13 +27,21 @@ if __name__ == "__main__":
         LogisticDeath(sys_size),
         consumption_rxn
     ]
+
+    start = time.time()
     for i, H in enumerate(hs):
         print(f'\r{i}/{n_samples}', end='')
         consumption_rxn.alpha = get_alpha(mu, rho, H, C)
         consumption_rxn.beta = get_beta(mu, K, H, C)
-        _, A = run_time(A_0, reactions, final_time)
-        equilibria[i] = A[-1] / sys_size
+        A_final = run_time(A_0, reactions, final_time, return_all=False)
+        equilibria[i] = A_final / sys_size
     print(f'\r{n_samples}/{n_samples}')
+    end=time.time()
+    print(f'Total time: {end-start}')
     
-    plt.plot(hs, equilibria)
+    ax.plot(hs, equilibria)
+    ax.set_xlim(hs.min(), hs.max())
+    ax.set_xlabel('H')
+    ax.set_ylabel('Resource Density at Equilibrium')
+
     plt.show()
