@@ -9,14 +9,13 @@ from socialcollapse import get_alpha, get_beta
 from reaction import *
 
 
-def seed_H(H):
-    np.random.seed(int(hashlib.md5(str(H).encode()).hexdigest(), 16) % 2**32)
+def seed(H, sys_size):
+    np.random.seed(int(hashlib.md5(str(H+sys_size).encode()).hexdigest(), 16) % 2**32)
 
 
-def run_series(hs):
+def run_series(hs, sys_size):
     n_samples = len(hs)
     equilibria = np.zeros(n_samples)
-    sys_size = 500
     final_time = 1e6
     A_0 = sys_size
     mu = 2
@@ -31,7 +30,7 @@ def run_series(hs):
     ]
 
     for i, H in enumerate(hs):
-        seed_H(H)
+        seed(H, sys_size)
         print(f'\r{i}/{n_samples}', end='')
         consumption_rxn.alpha = get_alpha(mu, rho, H, C)
         consumption_rxn.beta = get_beta(mu, K, H, C)
@@ -41,9 +40,8 @@ def run_series(hs):
     return equilibria
 
 
-def get_final(H):
-    seed_H(H)
-    sys_size = 500
+def get_final(H, sys_size):
+    seed(H, sys_size)
     final_time = 1e6
     A_0 = sys_size
     mu = 2
@@ -61,13 +59,45 @@ def get_final(H):
     return A_final / sys_size
 
 
-def run_parallel(hs):
+def run_parallel(hs, sys_size, print_updates=None):
     n_samples = len(hs)
-    equilibria = np.zeros(n_samples)
-    with ProcessPoolExecutor() as executor:
-        equilibria = list(executor.map(get_final, hs))
+    equilibria = [0] * n_samples
+
+    if print_updates:
+        h_batches = np.array_split(hs, print_updates)
+        with ProcessPoolExecutor() as executor:
+            n_completed = 0
+            for i, batch in enumerate(h_batches):
+                print(f'\r{100 * i / print_updates:.1f}%', end='')
+                batch_size = len(batch)
+                equilibria[n_completed:n_completed+batch_size] = executor.map(get_final, batch, [sys_size]*batch_size)
+                n_completed += batch_size
+        print(f'\r{100:.1f}%')
+
+    else:
+        with ProcessPoolExecutor() as executor:
+            equilibria = list(executor.map(get_final, hs, [sys_size]*n_samples))
     return equilibria
 
 
 if __name__ == "__main__":
-    pass
+    _, ax = plt.subplots()
+
+    n_samples = 100
+    hs = np.linspace(0, 5, n_samples)
+    sys_sizes = [500, 5_000, 50_000]
+
+    for sys_size in sys_sizes:
+        print(f'Begin {sys_size=}')
+        start = time.time()
+        equilibria = run_parallel(hs, sys_size, print_updates=10)
+        end=time.time()
+        print(f'Simulation time: {end-start}')        
+        ax.plot(hs, equilibria, 'o', label=f'{sys_size=}')
+
+    ax.set_xlim(hs.min(), hs.max())
+    ax.set_xlabel('H')
+    ax.set_ylabel('Resource Density at Equilibrium')
+    ax.legend()
+
+    plt.show()

@@ -10,9 +10,10 @@ def compare_series_parallel():
 
     n_samples = 10
     hs = np.linspace(0, 5, n_samples)
+    sys_size = 500
     
     start = time.time()
-    equilibria = run_series(hs)
+    equilibria = run_series(hs, sys_size)
     end=time.time()
     print(f'Total time: {end-start}')
     
@@ -23,7 +24,7 @@ def compare_series_parallel():
     axs[0].set_ylabel('Resource Density at Equilibrium')
 
     start = time.time()
-    equilibria = run_parallel(hs)
+    equilibria = run_parallel(hs, sys_size, print_updates=4)
     end=time.time()
     print(f'Total time: {end-start}')
     
