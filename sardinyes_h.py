@@ -32,8 +32,8 @@ def run_series(hs, sys_size):
     for i, H in enumerate(hs):
         seed(H, sys_size)
         print(f'\r{i}/{n_samples}', end='')
-        consumption_rxn.alpha = get_alpha(mu, rho, H, C)
-        consumption_rxn.beta = get_beta(mu, K, H, C)
+        consumption_rxn.A = get_alpha(mu, rho, H, C)
+        consumption_rxn.B = get_beta(mu, K, H, C)
         A_final = run_time(A_0, reactions, final_time, return_all=False)
         equilibria[i] = A_final / sys_size
     print(f'\r{n_samples}/{n_samples}')

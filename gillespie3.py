@@ -6,19 +6,20 @@ import numpy as np
 from reaction import *
 
 
-def step(A_t: int, reactions: Iterable[Reaction]):
+def step(y_t: int, reactions: Iterable[Reaction]):
     """
     Computes `tau`, the time to the next reaction, and `A_t_plus_tau`, the number of reactants at time t + tau.
 
-    `A_t`: The number of reactants at time `t`.
+    `y_t`: The number of reactants at time `t`.
     `reactions`: List of reactions.
     """
     r = np.random.random(size=2)
-    propensities = np.array([reaction.propensity(A_t) for reaction in reactions])
+    propensities = np.array([reaction.propensity(y_t) for reaction in reactions])
     # print(f"{A_t=}\n{propensities=}")
-    alpha0 = sum(propensities)
+    alpha0 = propensities.sum()
+    if alpha0 <= 0: return np.inf, 0
 
-    tau = log(1 / r[0]) / alpha0
+    tau = -log(r[0]) / alpha0
 
     propensity_ratios = propensities / alpha0
     j = 1
@@ -27,7 +28,7 @@ def step(A_t: int, reactions: Iterable[Reaction]):
         j += 1
         sum_alpha1_alphaj += propensity_ratios[j-1]
     reaction = reactions[j-1]
-    A_t_plus_tau = A_t - reaction.reactants + reaction.products
+    A_t_plus_tau = y_t - reaction.reactants + reaction.products
     return tau, A_t_plus_tau
 
 
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     A_0 = sys_size
     mu = 2
     K = 6
-    H = 2.9
+    H = 5
     C = 1
     rho = 1
     alpha = mu * rho / (H * C)
@@ -89,11 +90,11 @@ if __name__ == "__main__":
         ax1.plot(times, density, drawstyle='steps-post')
     ax1.set_xlabel('Time')
     ax1.set_ylabel('Resource Density')
-    for i in range(5):
-        np.random.seed(i)
-        times, A = run_time(A_0, reactions, 20000)
-        density = np.array(A) / sys_size
-        ax2.plot(times, density, drawstyle='steps-post')
-    ax2.set_xlabel('Time')
-    ax2.set_ylabel('Resource Density')
+    # for i in range(5):
+    #     np.random.seed(i)
+    #     times, A = run_time(A_0, reactions, 20000)
+    #     density = np.array(A) / sys_size
+    #     ax2.plot(times, density, drawstyle='steps-post')
+    # ax2.set_xlabel('Time')
+    # ax2.set_ylabel('Resource Density')
     plt.show()
