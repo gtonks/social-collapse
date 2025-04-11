@@ -15,7 +15,6 @@ class LogisticBirth(Reaction):
         self.mu = mu
 
     def contribution(self, x:float, ksi:float) -> float:
-        if x < 0: return 0
         result = self.mu * x * (1 + self.gamma_sqrt_dt * ksi)
         return result
     
@@ -26,7 +25,6 @@ class LogisticDeath(Reaction):
         self.mu_over_K = mu / K
 
     def contribution(self, x:float, ksi:float) -> float:
-        if x < 0: return 0
         result = -self.mu_over_K * x*x * (1 + self.gamma_sqrt_dt * ksi)
         return result
     
@@ -38,6 +36,5 @@ class Harvesting(Reaction):
         self.rho = rho
 
     def contribution(self, x:float, ksi:float) -> float:
-        if x < 0: return 0
         result = -(self.HC * x / (self.rho + x)) * (1 + self.gamma_sqrt_dt * ksi)
         return result
