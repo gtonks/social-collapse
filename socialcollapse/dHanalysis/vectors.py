@@ -3,10 +3,14 @@ import numpy as np
 from matplotlib.axes import Axes
 
 
-def plot_field(u: Callable[[np.ndarray, np.ndarray], np.ndarray], v: Callable[[np.ndarray, np.ndarray], np.ndarray], ax: Axes):
-    step = 0.25
-    max_x = 5
-    max_y = 6
+def plot_field(
+        u: Callable[[np.ndarray, np.ndarray], np.ndarray], 
+        v: Callable[[np.ndarray, np.ndarray], np.ndarray], 
+        ax: Axes, 
+        max_x:float=10, 
+        max_y:float=10,
+        step:float=0.25,
+):
     x_range = np.arange(0, max_x+step, step)
     y_range = np.arange(0, max_y+step, step)
     x_grid, y_grid = np.meshgrid(x_range, y_range)
@@ -16,10 +20,14 @@ def plot_field(u: Callable[[np.ndarray, np.ndarray], np.ndarray], v: Callable[[n
     ax.set_xlim(0, max_x)
     ax.set_ylim(0, max_y)
 
-def plot_direction(u: Callable[[np.ndarray, np.ndarray], np.ndarray], v: Callable[[np.ndarray, np.ndarray], np.ndarray], ax: Axes):
-    step = 0.1
-    max_x = 5
-    max_y = 6
+def plot_direction(
+        u: Callable[[np.ndarray, np.ndarray], np.ndarray],
+        v: Callable[[np.ndarray, np.ndarray], np.ndarray],
+        ax: Axes,
+        max_x:float=10, 
+        max_y:float=10,
+        step:float=0.25,
+):
     x_range = np.arange(0, max_x+step, step)
     y_range = np.arange(0, max_y+step, step)
     x_grid, y_grid = np.meshgrid(x_range, y_range)
@@ -34,9 +42,13 @@ def plot_direction(u: Callable[[np.ndarray, np.ndarray], np.ndarray], v: Callabl
     ax.set_xlim(0, max_x)
     ax.set_ylim(0, max_y)
 
-def plot_streamlines(u: Callable[[np.ndarray, np.ndarray], np.ndarray], v: Callable[[np.ndarray, np.ndarray], np.ndarray], ax: Axes):
-    max_x = 5
-    max_y = 6
+def plot_streamlines(
+        u: Callable[[np.ndarray, np.ndarray], np.ndarray],
+        v: Callable[[np.ndarray, np.ndarray], np.ndarray], 
+        ax: Axes,
+        max_x = 10,
+        max_y = 10,
+):
     x_range = np.linspace(0, max_x, 1000)
     y_range = np.linspace(0, max_y, 1000)
     x_grid, y_grid = np.meshgrid(x_range, y_range)
