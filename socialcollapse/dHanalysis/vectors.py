@@ -16,9 +16,10 @@ def plot_field(
     x_grid, y_grid = np.meshgrid(x_range, y_range)
     us = u(x_grid, y_grid)
     vs = v(x_grid, y_grid)
-    ax.quiver(x_grid, y_grid, us, vs)
+    quiv = ax.quiver(x_grid, y_grid, us, vs)
     ax.set_xlim(0, max_x)
     ax.set_ylim(0, max_y)
+    return quiv, x_grid, y_grid
 
 def plot_direction(
         u: Callable[[np.ndarray, np.ndarray], np.ndarray],
@@ -54,6 +55,7 @@ def plot_streamlines(
     x_grid, y_grid = np.meshgrid(x_range, y_range)
     us = u(x_grid, y_grid)
     vs = v(x_grid, y_grid)
-    ax.streamplot(x_grid, y_grid, us, vs)
+    stream = ax.streamplot(x_grid, y_grid, us, vs)
     ax.set_xlim(0, max_x)
     ax.set_ylim(0, max_y)
+    return stream, x_grid, y_grid
