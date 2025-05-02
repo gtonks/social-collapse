@@ -1,3 +1,7 @@
+"""
+A source becomes a sink when mu_h decreases and k_h increases.
+"""
+
 from math import log10
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,11 +44,11 @@ if __name__ == "__main__":
     ax_c_slider = plt.axes([0.2, 0.08, 0.65, 0.03])
 
     mu_slider = Slider(ax_mu_slider, 'mu_h (log)', -1, 1, valinit=log10(init_mu_h))  # log10(0.1) to log10(10)
-    c_slider = Slider(ax_c_slider, 'c_h (log)', -2, 2, valinit=log10(init_c_h))
+    c_slider = Slider(ax_c_slider, 'c_h (log)', -1, 1, valinit=log10(init_c_h))
 
     def update(val):
         mu_h = 10 ** mu_slider.val
-        c_h = c_slider.val
+        c_h = 10 ** c_slider.val
 
         # Update vector field
         new_dh = dh_dt_with_params(x_grid, y_grid, mu_h, c_h)

@@ -1,3 +1,7 @@
+"""
+A sink and a node merge into a single node when k_h increases.
+"""
+
 from math import log10
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
