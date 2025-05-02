@@ -1,19 +1,23 @@
 """
-A sink and a node merge into a single node when k_h increases.
+A sink and a node merge and disappear when k_h increases above the bifurcation point.
 """
 
-from math import log10
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 
-from .eq2 import dx_dt, dh_dt_with_params
+from .dx_dt import dx_dt
 from . import vectors
 
 
+def dh_dt_with_params(h, x, mu_h, k_h):
+    return mu_h * x * h * (1 - h / k_h)
+
+
 if __name__ == "__main__":
-    init_mu_h = 0.1
-    init_k_h = 10
-    max_h = 10
+    # Sliders added with help from ChatGPT
+    init_mu_h = 1
+    init_k_h = 4
+    max_h = 8
     max_x = 6
 
     fig, axs = plt.subplots(1, 2)
@@ -38,8 +42,8 @@ if __name__ == "__main__":
     ax_mu_slider = plt.axes([0.2, 0.15, 0.65, 0.03])
     ax_k_slider = plt.axes([0.2, 0.08, 0.65, 0.03])
 
-    mu_slider = Slider(ax_mu_slider, 'mu_h (log)', -2, 0, valinit=log10(init_mu_h))  # log10(0.01) to log10(1)
-    k_slider = Slider(ax_k_slider, 'k_h', 1, 20, valinit=init_k_h)    # Linear
+    mu_slider = Slider(ax_mu_slider, 'mu_h (log)', -1, 1, valinit=0)  # log10(0.1) to log10(10)
+    k_slider = Slider(ax_k_slider, 'k_h', 1, 7, valinit=init_k_h)    # Linear
 
     def update(val):
         mu_h = 10 ** mu_slider.val
