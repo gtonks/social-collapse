@@ -1,5 +1,5 @@
 """
-A sink.
+A sink at low r, a node at high r. Both in between. Beta has the opposite effect.
 """
 
 from math import log10
@@ -11,7 +11,7 @@ from . import vectors
 
 
 def gamma_with_params(x, alpha, beta, k_gamma):
-    return beta * (1 - x / k_gamma) + alpha * x
+    return beta - (beta - alpha) * x / k_gamma
 
 
 def dh_dt_with_params(h, x, r, alpha, beta, k_gamma):

@@ -15,7 +15,7 @@ Equation 3: `dh/dt = mu_h*h - c_h*h/x`.
 Equation 4:
 ```
 dh/dt = h*(r - gamma(x)*h)
-gamma(x) = beta*(1 - x/k_gamma) + alpha*x.
+gamma(x) = beta - (beta - alpha)*x/k_gamma.
 ```
 
 #### Execution
