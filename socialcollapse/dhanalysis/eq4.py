@@ -6,23 +6,24 @@ from math import log10
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 
+from socialcollapse import defaults
 from .dx_dt import dx_dt
 from . import vectors
 
 
-def gamma_with_params(x, alpha, beta, k_gamma):
-    return beta - (beta - alpha) * x / k_gamma
+def gamma_with_params(x, alpha, beta, k):
+    return beta - (beta - alpha) * x / k
 
 
-def dh_dt_with_params(h, x, r, alpha, beta, k_gamma):
-    return h * (r - gamma_with_params(x, alpha, beta, k_gamma) * h)
+def dh_dt_with_params(h, x, r, alpha, beta, k):
+    return h * (r - gamma_with_params(x, alpha, beta, k) * h)
 
 
 if __name__ == "__main__":
     init_r = 1
     alpha = 0
     init_beta = 1
-    k_gamma = 4
+    k = defaults.K
 
     max_h = 10
     max_x = 6
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(bottom=0.25)
 
     # Initial vector field
-    dh_dt = lambda h, x: dh_dt_with_params(h, x, init_r, alpha, init_beta, k_gamma)
+    dh_dt = lambda h, x: dh_dt_with_params(h, x, init_r, alpha, init_beta, k)
 
     ax1 = axs[0]
     quiv, x_grid, y_grid = vectors.plot_field(dh_dt, dx_dt, ax1, max_h, max_x)
@@ -57,12 +58,12 @@ if __name__ == "__main__":
         beta = 10 ** beta_slider.val
 
         # Update vector field
-        new_dh = dh_dt_with_params(x_grid, y_grid, r, alpha, beta, k_gamma)
+        new_dh = dh_dt_with_params(x_grid, y_grid, r, alpha, beta, k)
         new_dx = dx_dt(x_grid, y_grid)
         quiv.set_UVC(new_dh, new_dx)
 
         ax2.cla()
-        new_dh_s = dh_dt_with_params(sx_grid, sy_grid, r, alpha, beta, k_gamma)
+        new_dh_s = dh_dt_with_params(sx_grid, sy_grid, r, alpha, beta, k)
         new_dx_s = dx_dt(sx_grid, sy_grid)
         ax2.streamplot(sx_grid, sy_grid, new_dh_s, new_dx_s)
         ax2.set_xlabel('h')
