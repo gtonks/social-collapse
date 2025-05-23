@@ -52,11 +52,11 @@ if __name__ == "__main__":
     ax2.set_title(f'Stream: r={init_r:.2f}, beta={init_beta:.2f}, c={init_c:.2f}')
     
     # Slider axes
-    ax_mu_slider = plt.axes([0.1, 0.15, 0.35, 0.03])
+    ax_r_slider = plt.axes([0.1, 0.15, 0.35, 0.03])
     ax_beta_slider = plt.axes([0.1, 0.08, 0.35, 0.03])
     ax_c_slider = plt.axes([0.55, 0.15, 0.35, 0.03])
 
-    r_slider = Slider(ax_mu_slider, 'r (log)', -1, 1, valinit=log10(init_r))  # log10(0.1) to log10(10)
+    r_slider = Slider(ax_r_slider, 'r (log)', -1, 1, valinit=log10(init_r))  # log10(0.1) to log10(10)
     beta_slider = Slider(ax_beta_slider, 'beta (log)', -1, 1, valinit=log10(init_beta))
     c_slider = Slider(ax_c_slider, 'c (log)', -1, 1, valinit=log10(init_c))
 
