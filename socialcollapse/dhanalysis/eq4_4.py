@@ -71,6 +71,8 @@ if __name__ == "__main__":
         new_dh_s = dh_dt_with_params(sx_grid, sy_grid, r, alpha, beta, k)
         new_dx_s = dx_dt_with_params(sx_grid, sy_grid, mu, k, c, rho)
         ax.streamplot(sx_grid, sy_grid, new_dh_s, new_dx_s)
+        ax.set_xlim(-0.1, max_h)
+        ax.set_ylim(-0.1, max_x)
         ax.set_xlabel('h')
         ax.set_ylabel('x')
         ax.set_title(f'Stream: {mu=:.2f}, {r=:.2f}, {alpha=:.2f}, {beta=:.2f}, {c=:.2f}, {k=:.2f}, {rho=:.2f}')

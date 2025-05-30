@@ -56,6 +56,6 @@ def plot_streamlines(
     us = u(x_grid, y_grid)
     vs = v(x_grid, y_grid)
     stream = ax.streamplot(x_grid, y_grid, us, vs)
-    ax.set_xlim(0, max_x)
-    ax.set_ylim(0, max_y)
+    ax.set_xlim(-0.1, max_x)
+    ax.set_ylim(-0.1, max_y)
     return stream, x_grid, y_grid

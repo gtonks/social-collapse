@@ -74,6 +74,8 @@ if __name__ == "__main__":
         new_dh_s = dh_dt_with_params(sx_grid, sy_grid, r, alpha, beta, k)
         new_dx_s = dx_dt_with_params(sx_grid, sy_grid, mu, k, c, rho)
         ax2.streamplot(sx_grid, sy_grid, new_dh_s, new_dx_s)
+        ax2.set_xlim(-0.1, max_h)
+        ax2.set_ylim(-0.1, max_x)
         ax2.set_xlabel('h')
         ax2.set_ylabel('x')
 
