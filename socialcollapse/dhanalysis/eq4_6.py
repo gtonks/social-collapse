@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 import matplotlib.gridspec as gridspec
 
-from socialcollapse import defaults
 from .dx_dt import dx_dt_with_params
 from . import vectors
 
@@ -112,7 +111,7 @@ if __name__ == "__main__":
 
     mu_slider = Slider(ax_mu_slider, 'mu (log)', -2, 2, valinit=log10(init_mu))
     r_slider = Slider(ax_r_slider, 'r (log)', -2, 2, valinit=log10(init_r))
-    alpha_slider = Slider(ax_alpha_slider, 'alpha (log)', -3, 0, valinit=log10(init_alpha))
+    alpha_slider = Slider(ax_alpha_slider, 'alpha (log)', -3, log10(init_beta), valinit=log10(init_alpha))
     beta_slider = Slider(ax_beta_slider, 'beta (log)', 0, 3, valinit=log10(init_beta))
     c_slider = Slider(ax_c_slider, 'c (log)', -1, 1, valinit=log10(init_c))
     k_slider = Slider(ax_k_slider, 'k (log)', 0, 1, valinit=log10(init_k))
