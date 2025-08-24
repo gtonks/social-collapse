@@ -28,13 +28,23 @@ python -m socialcollapse.dhanalysis.eq4
 ```
 
 ### `eulermaruyama`
-Contains Euler-Maruyama simulations with a fixed `dH/dt = 0`.
+Euler-Maruyama simulations.
+
+#### `H_var`
+Variation in `H` with an average `dH/dt = 0`.
+
+#### `mu_var`
+Variation in `mu` with a fixed `dH/dt = 0`.
+
+#### `mu_var_linear_dH`
+Variation in `mu` with `dH/dt = rH - gamma(x)H^2`.
 
 #### Execution
 From this directory,
 ```
 python -m socialcollapse.eulermaruyama.H_var
 python -m socialcollapse.eulermaruyama.mu_var
+python -m socialcollapse.eulermaruyama.mu_var_linear_dH
 ```
 
 ### `gillespie`
