@@ -39,12 +39,16 @@ Variation in `mu` with a fixed `dH/dt = 0`.
 #### `mu_var_linear_dH`
 Variation in `mu` with `dH/dt = rH - gamma(x)H^2`.
 
+#### `mu_var_linear_dH`
+Variation in `mu` with `dH/dt = BxH / (rho + x) - dH - gamma(x)H^2`.
+
 #### Execution
 From this directory,
 ```
 python -m socialcollapse.eulermaruyama.H_var
 python -m socialcollapse.eulermaruyama.mu_var
 python -m socialcollapse.eulermaruyama.mu_var_linear_dH
+python -m socialcollapse.eulermaruyama.mu_var_nonlinear_dH
 ```
 
 ### `gillespie`
