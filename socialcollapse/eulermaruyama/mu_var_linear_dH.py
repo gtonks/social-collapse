@@ -27,7 +27,7 @@ class Simulation:
         self.b_minus_a_over_K = (b - a) / K
 
     def step_x(self, x:float, H:float) -> float:
-        ksi = gauss()
+        ksi = gauss(0, 1)
         log_det = logistic_growth(x, self.mu_dt, self.K)
         harvesting_det = harvesting(x, self.C_dt * H, self.rho)
         harvesting_var = harvesting(x, self.C_sigma_sqrt_dt, self.rho) * ksi
