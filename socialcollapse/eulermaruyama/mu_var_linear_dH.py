@@ -17,6 +17,7 @@ def dH_dt(x, H, r, b, b_minus_a_over_K):
 
 class Simulation:
     def __init__(self, mu, K, C, rho, r, a, b, dt, sigma):
+        self.dt = dt
         self.mu_dt = mu * dt
         self.K = K
         self.C_dt = C * dt
@@ -37,7 +38,7 @@ class Simulation:
         return new_x
     
     def step_H(self, x:float, H:float) -> float:
-        dH = dH_dt(x, H, self.r, self.b, self.b_minus_a_over_K) * dt
+        dH = dH_dt(x, H, self.r, self.b, self.b_minus_a_over_K) * self.dt
         new_H = H + dH
         if new_H < 0: new_H = 0
         return new_H
@@ -82,6 +83,7 @@ if __name__ == "__main__":
 
     sigma = 0
     xs, Hs, times = Simulation.simulate(mu, K, C, rho, r, a, b, dt, sigma, x0, H0, n_steps)
+    print(f'Final deterministic state: x={xs[-1]}, H={Hs[-1]}')
     axs[0,0].plot(times, xs, label=f'sigma=0')
     axs[0,1].plot(times, Hs, label=f'sigma=0')
     axs[0,2].plot(xs, Hs, label=f'sigma=0')

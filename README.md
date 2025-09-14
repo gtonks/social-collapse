@@ -39,8 +39,14 @@ Variation in `mu` with a fixed `dH/dt = 0`.
 #### `mu_var_linear_dH`
 Variation in `mu` with `dH/dt = rH - gamma(x)H^2`.
 
-#### `mu_var_linear_dH`
+#### `mu_var_nonlinear_dH`
 Variation in `mu` with `dH/dt = BxH / (rho + x) - dH - gamma(x)H^2`.
+
+#### `final_search_mu_var_linear_dH`
+Computes data for final points after `n_steps` iterations. Repeats for several `b` and `sigma` over `n_trials`.
+
+#### `plot_prob_mesh`
+Plot the probability of resource availability over the parameter search data from `final_search_mu_var_linear_dH`.
 
 #### Execution
 From this directory,
@@ -49,6 +55,8 @@ python -m socialcollapse.eulermaruyama.H_var
 python -m socialcollapse.eulermaruyama.mu_var
 python -m socialcollapse.eulermaruyama.mu_var_linear_dH
 python -m socialcollapse.eulermaruyama.mu_var_nonlinear_dH
+python -m socialcollapse.eulermaruyama.final_search_mu_var_linear_dH
+python -m socialcollapse.eulermaruyama.plot_prob_mesh
 ```
 
 ### `gillespie`
