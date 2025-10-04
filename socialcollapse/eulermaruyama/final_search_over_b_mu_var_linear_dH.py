@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print("Starting trials...")
 
     n_steps = 10_000
-    n_trials = 100
+    n_trials = 1000
     sigmas = np.linspace(0, 0.5, 40)
 
     x_final = np.empty((bs.size, sigmas.size, n_trials))
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     print()
 
 
-    file_path = "final_search_results.npz"
+    file_path = "final_search_over_b.npz"
     print(f"Saving results to {file_path}...")
     np.savez_compressed(file_path,
                         dimensions=np.array(["bs", "sigmas", "trials"]),

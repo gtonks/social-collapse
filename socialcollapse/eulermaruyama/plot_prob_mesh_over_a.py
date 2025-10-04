@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    data = np.load("final_search_results.npz")
-    bs = data['bs']
+    data = np.load("final_search_over_a.npz")
+    a_s = data['a_s']
     sigmas = data['sigmas']
     x_steady = data['x_steady']
     H_steady = data['H_steady']
@@ -16,14 +16,14 @@ if __name__ == "__main__":
     probs = x_available / n_trials
 
     # Create meshgrid for plotting
-    X, Y = np.meshgrid(sigmas, bs)
+    X, Y = np.meshgrid(sigmas, a_s)
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
     surf = ax.plot_surface(X, Y, probs, cmap='viridis')
     ax.set_xlabel('sigma')
-    ax.set_ylabel('b')
+    ax.set_ylabel('a')
     ax.set_zlabel('Probability of resource availability')
     fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
 

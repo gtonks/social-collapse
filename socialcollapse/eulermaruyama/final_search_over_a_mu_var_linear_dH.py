@@ -10,8 +10,8 @@ if __name__ == "__main__":
     C = 1.031
     rho = 0.04
     r = 2.052
-    a = 2.0
-    bs = np.concatenate((np.array([11.6, 11.8]), np.arange(12.0, 55.0)))
+    a_s = np.arange(3.2, 11.2, 0.2)
+    b = 11.0
     dt = 1e-3
 
 
@@ -21,30 +21,30 @@ if __name__ == "__main__":
     sigma = 0
     start = time()
 
-    x_steady = np.empty(bs.size)
-    H_steady = np.empty(bs.size)
-    for i, b in enumerate(bs):
+    x_steady = np.empty(a_s.size)
+    H_steady = np.empty(a_s.size)
+    for i, a in enumerate(a_s):
         xs, Hs, _ = Simulation.simulate(mu, K, C, rho, r, a, b, dt, sigma, 0.9, 0.1, n_steps)
         x_steady[i] = xs[-1]
         H_steady[i] = Hs[-1]
-        print(f'\r{i+1}/{bs.size} steady states computed in {time()-start:.2f} seconds', end='')
+        print(f'\r{i+1}/{a_s.size} steady states computed in {time()-start:.2f} seconds', end='')
     print()
 
 
     print("Starting trials...")
 
     n_steps = 10_000
-    n_trials = 100
+    n_trials = 1000
     sigmas = np.linspace(0, 0.5, 40)
 
-    x_final = np.empty((bs.size, sigmas.size, n_trials))
-    H_final = np.empty((bs.size, sigmas.size, n_trials))
+    x_final = np.empty((a_s.size, sigmas.size, n_trials))
+    H_final = np.empty((a_s.size, sigmas.size, n_trials))
 
-    total_trials = n_trials * sigmas.size * bs.size
+    total_trials = n_trials * sigmas.size * a_s.size
     current_trial = 0
     start = time()
 
-    for i, b in enumerate(bs):
+    for i, a in enumerate(a_s):
         for j, sigma in enumerate(sigmas):
             for k in range(n_trials):
                 xs, Hs, _ = Simulation.simulate(mu, K, C, rho, r, a, b, dt, sigma, x_steady[i], H_steady[i], n_steps)
@@ -55,11 +55,11 @@ if __name__ == "__main__":
     print()
 
 
-    file_path = "final_search_results.npz"
+    file_path = "final_search_over_a.npz"
     print(f"Saving results to {file_path}...")
     np.savez_compressed(file_path,
-                        dimensions=np.array(["bs", "sigmas", "trials"]),
-                        bs=bs,
+                        dimensions=np.array(["a_s", "sigmas", "trials"]),
+                        a_s=a_s,
                         sigmas=sigmas,
                         x_steady=x_steady,
                         H_steady=H_steady,
