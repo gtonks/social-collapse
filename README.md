@@ -1,6 +1,22 @@
 # social-collapse
 Stochastic modeling of social collapse
 
+## Figures from Project Report
+Figure 1: `dhanalysis/Social_Collapse_linear_consumer_birth.m` (MATLAB script). Note: Optimization Toolbox must be installed.
+
+Figures 2, 3: These were created using MATCONT without writing code.
+
+Figure 4: `dhanalysis/Social_Collapse_nonlinear_consumer_birth.m` (MATLAB script). Note: Optimization Toolbox must be installed.
+
+Figure 5: `python -m socialcollapse.eulermaruyama.mu_var_linear_dH`
+
+Figure 6: Compute data using `python -m socialcollapse.eulermaruyama.final_search_over_a_mu_var_linear_dH`. Figure comes from `eulermaruyama/Final_Search_a_Analysis.ipynb`. See `python -m socialcollapse.eulermaruyama.plot_prob_mesh_over_a` for a 3D visualization.
+
+Figure 7: Compute data using `python -m socialcollapse.eulermaruyama.final_search_over_b_mu_var_linear_dH`. Figure comes from `eulermaruyama/Final_Search_b_Analysis.ipynb`. See `python -m socialcollapse.eulermaruyama.plot_prob_mesh_over_b` for a 3D visualization.
+
+Figure 8: Compute data using `python -m socialcollapse.eulermaruyama.final_search_over_b_mu_var_linear_dH`. Figure comes from `eulermaruyama/Final_Search_b_Analysis.ipynb`.
+
+
 ## Contents
 
 ### `dhanalysis`
