@@ -1,8 +1,8 @@
 % Analytic Version: Uses fsolve for equilibria
 function Social_Collapse_B
     % Parameters
-    init_B = 3.630; % Adjusted to match console output
-    init_d = 0.227; % Adjusted to match console output
+    init_B = 3.630;
+    init_d = 0.266;
     init_beta = 12.444;
     init_alpha = 1.080;
     init_c = 0.600;
@@ -14,7 +14,7 @@ function Social_Collapse_B
     f1 = figure('Position', [100, 100, 600, 600]);
     ax = axes('Parent', f1, 'Position', [0.1, 0.1, 0.85, 0.85]);
     xlabel(ax, 'Resources, y', 'FontSize',16);
-    ylabel(ax, 'Population size, H','FontSize',16);
+    ylabel(ax, 'Consumer population, H','FontSize',16);
     xticks([0 1]);
     yticks([0 0.5])
 

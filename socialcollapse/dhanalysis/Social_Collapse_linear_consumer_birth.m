@@ -1,19 +1,19 @@
 % Analytic Version: Uses fsolve for equilibria
 function Social_Collapse
     % Parameters
-    init_r = 2.304;
-    init_beta = 30;
-    init_alpha = 2.4;
-    init_c = 0.600;
-    init_rho = 0.02;
-    init_max_H = 1.5;
+    init_r = 2.052;
+    init_beta = 11.8;
+    init_alpha = 2.0;
+    init_c = 1.031;
+    init_rho = 0.04;
+    init_max_H = 0.5;
     init_max_x = 1.180;
 
     % Create figures
     f1 = figure('Position', [100, 100, 600, 600]);
     ax = axes('Parent', f1, 'Position', [0.1, 0.1, 0.85, 0.85]);
     xlabel(ax, 'Resources, y');
-    ylabel(ax, 'Population size, H');
+    ylabel(ax, 'Consumer population, H');
 
     f2 = figure('Position', [800, 100, 600, 600]);
 
@@ -34,8 +34,8 @@ function Social_Collapse
     plot(ax, eq_points(valid_idx & ~is_stable, 1), eq_points(valid_idx & ~is_stable, 2), ...
          'ko', 'MarkerFaceColor', 'w', 'MarkerSize', 8);
     hold(ax, 'off');
-    xlim(ax, [-0.1, init_max_x]);
-    ylim(ax, [-0.1, init_max_H]);
+    xlim(ax, [-0.01, init_max_x]);
+    ylim(ax, [-0.01, init_max_H]);
 
     % Equilibria list
     eq_text = uicontrol('Parent', f2, 'Style', 'text', ...
@@ -120,8 +120,8 @@ function Social_Collapse
         plot(ax, eq_points(valid_idx & ~is_stable, 1), eq_points(valid_idx & ~is_stable, 2), ...
              'ko', 'MarkerFaceColor', 'w', 'MarkerSize', 7);
         hold(ax, 'off');
-        xlim(ax, [-0.1, max_x]);
-        ylim(ax, [-0.1, max_H]);
+        xlim(ax, [-0.01, max_x]);
+        ylim(ax, [-0.01, max_H]);
         xlabel(ax, 'Resources, x');
         ylabel(ax, 'Population size, H');
 
