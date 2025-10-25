@@ -10,10 +10,12 @@ function Social_Collapse
     init_max_x = 1.180;
 
     % Create figures
-    f1 = figure('Position', [100, 100, 600, 600]);
-    ax = axes('Parent', f1, 'Position', [0.1, 0.1, 0.85, 0.85]);
+    f1 = figure('Position', [100, 100, 300, 180]);
+    ax = axes('Parent', f1, 'Position', [0.15, 0.2, 0.8, 0.75]);
     xlabel(ax, 'Resources, y');
     ylabel(ax, 'Consumer population, H');
+    xticks(0:0.5:init_max_x);
+    yticks(0:0.5:init_max_H);
 
     f2 = figure('Position', [800, 100, 600, 600]);
 
@@ -22,7 +24,7 @@ function Social_Collapse
 
     % Initial plot
     [dH, dx] = compute_field(H_grid, x_grid, init_r, init_alpha, init_beta, init_c, init_rho);
-    streamslice(ax, x_grid, H_grid, dx, dH, 2, 'Color', 'r');
+    streamslice(ax, x_grid, H_grid, dx, dH, 0.5, 'Color', 'r');
     hold(ax, 'on');
     [eq_points, is_stable, eq_types] = compute_equilibria(init_r, init_alpha, init_beta, init_c, init_rho, init_max_x, init_max_H);
     valid_idx = ~isnan(eq_points(:,1)) & ~isinf(eq_points(:,1)) & ...
@@ -30,9 +32,9 @@ function Social_Collapse
                 ~isnan(eq_points(:,2)) & ~isinf(eq_points(:,2)) & ...
                 eq_points(:,2) >= 0 & eq_points(:,2) <= init_max_H;
     plot(ax, eq_points(valid_idx & is_stable, 1), eq_points(valid_idx & is_stable, 2), ...
-         'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
+         'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 4);
     plot(ax, eq_points(valid_idx & ~is_stable, 1), eq_points(valid_idx & ~is_stable, 2), ...
-         'ko', 'MarkerFaceColor', 'w', 'MarkerSize', 8);
+         'ko', 'MarkerFaceColor', 'w', 'MarkerSize', 4);
     hold(ax, 'off');
     xlim(ax, [-0.01, init_max_x]);
     ylim(ax, [-0.01, init_max_H]);
@@ -108,7 +110,7 @@ function Social_Collapse
 
         cla(ax);
         [dH, dx] = compute_field(H_grid, x_grid, r, alpha, beta, c, rho);
-        streamslice(ax, x_grid, H_grid, dx, dH, 2, 'Color', 'r');
+        streamslice(ax, x_grid, H_grid, dx, dH, 0.5, 'Color', 'r');
         hold(ax, 'on');
         [eq_points, is_stable, eq_types] = compute_equilibria(r, alpha, beta, c, rho, max_x, max_H);
         valid_idx = ~isnan(eq_points(:,1)) & ~isinf(eq_points(:,1)) & ...
@@ -116,9 +118,9 @@ function Social_Collapse
                     ~isnan(eq_points(:,2)) & ~isinf(eq_points(:,2)) & ...
                     eq_points(:,2) >= 0 & eq_points(:,2) <= max_H;
         plot(ax, eq_points(valid_idx & is_stable, 1), eq_points(valid_idx & is_stable, 2), ...
-             'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
+             'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 4);
         plot(ax, eq_points(valid_idx & ~is_stable, 1), eq_points(valid_idx & ~is_stable, 2), ...
-             'ko', 'MarkerFaceColor', 'w', 'MarkerSize', 8);
+             'ko', 'MarkerFaceColor', 'w', 'MarkerSize', 4);
         hold(ax, 'off');
         xlim(ax, [-0.01, max_x]);
         ylim(ax, [-0.01, max_H]);
