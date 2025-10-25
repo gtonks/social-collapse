@@ -78,32 +78,34 @@ if __name__ == "__main__":
     H0 = 0.1
     n_steps = 10000
 
+    sigmas = np.concatenate([[0], np.logspace(-2, 0, 6)])
+    xs = np.zeros((len(sigmas), n_steps+1))
+    Hs = np.zeros((len(sigmas), n_steps+1))
+    times = np.zeros((len(sigmas), n_steps+1))
+
+    for i, sigma in enumerate(sigmas):
+        xs[i], Hs[i], times[i] = Simulation.simulate(mu, K, C, rho, r, a, b, dt, sigma, x0, H0, n_steps)
+
+    print(f'Final deterministic state: x={xs[0,-1]}, H={Hs[0,-1]}')
+
     _, axs = plt.subplots(1,3)
     axs = axs.reshape((1,3))
+    for i in reversed(range(len(sigmas))):
+        sigma = sigmas[i]
+        axs[0,0].plot(times[i], xs[i], label=f'$\\sigma={sigma:.4f}$')
+        axs[0,1].plot(times[i], Hs[i], label=f'$\\sigma={sigma:.4f}$')
+        axs[0,2].plot(xs[i], Hs[i], label=f'$\\sigma={sigma:.4f}$')
 
-    sigma = 0
-    xs, Hs, times = Simulation.simulate(mu, K, C, rho, r, a, b, dt, sigma, x0, H0, n_steps)
-    print(f'Final deterministic state: x={xs[-1]}, H={Hs[-1]}')
-    axs[0,0].plot(times, xs, label=f'sigma=0')
-    axs[0,1].plot(times, Hs, label=f'sigma=0')
-    axs[0,2].plot(xs, Hs, label=f'sigma=0')
-
-    for sigma in np.logspace(-2, 0, 6):
-        xs, Hs, times = Simulation.simulate(mu, K, C, rho, r, a, b, dt, sigma, x0, H0, n_steps)
-        axs[0,0].plot(times, xs, label=f'{sigma=:.4f}')
-        axs[0,1].plot(times, Hs, label=f'{sigma=:.4f}')
-        axs[0,2].plot(xs, Hs, label=f'{sigma=:.4f}')
-
-    axs[0,0].set_xlabel('Time')
-    axs[0,0].set_ylabel('Resources')
+    axs[0,0].set_xlabel('$\\tau$')
+    axs[0,0].set_ylabel('$y$')
     axs[0,0].legend()
 
-    axs[0,1].set_xlabel('Time')
-    axs[0,1].set_ylabel('Humans')
+    axs[0,1].set_xlabel('$\\tau$')
+    axs[0,1].set_ylabel('$H$')
     axs[0,1].legend()
 
-    axs[0,2].set_xlabel('Resources')
-    axs[0,2].set_ylabel('Humans')
+    axs[0,2].set_xlabel('$y$')
+    axs[0,2].set_ylabel('$H$')
     axs[0,2].legend()
 
     plt.show()

@@ -22,8 +22,8 @@ if __name__ == "__main__":
     ax = fig.add_subplot(111, projection='3d')
 
     surf = ax.plot_surface(X, Y, probs, cmap='viridis')
-    ax.set_xlabel('sigma')
-    ax.set_ylabel('b')
+    ax.set_xlabel(r'$\sigma$')
+    ax.set_ylabel(r'$b$')
     ax.set_zlabel('Probability of resource availability')
     fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
 
