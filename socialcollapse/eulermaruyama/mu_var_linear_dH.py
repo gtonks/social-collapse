@@ -104,6 +104,8 @@ if __name__ == "__main__":
     axs[0,1].set_ylabel('$H$')
     axs[0,1].legend()
 
+    axs[0,2].plot(x0, H0, 'o', label='Initial state')
+    axs[0,2].plot([xs[0,-1], 0], [Hs[0,-1], r/b], 'ko', label='Stable steady states')
     axs[0,2].set_xlabel('$y$')
     axs[0,2].set_ylabel('$H$')
     axs[0,2].legend()
